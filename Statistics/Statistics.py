@@ -6,3 +6,9 @@ class Statistics(Calculator):
 
     def __init__(self):
         super().__init__()
+        
+    def mean()
+        pass
+    
+    def median()
+        pass
