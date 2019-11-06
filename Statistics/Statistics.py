@@ -7,8 +7,8 @@ class Statistics(Calculator):
     def __init__(self):
         super().__init__()
         
-    def mean()
+    def mean(self):
         pass
     
-    def median()
+    def median(self):
         pass
