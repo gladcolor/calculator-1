@@ -5,8 +5,11 @@
 # Test result
 
 Ran in docker:
+
 ![](./img/docker_test.jpg)
 
+
+Ran in Pycharm:
 collecting ... collected 8 items
 
 test_Calculator.py::MyTestCase::test_add PASSED                          [ 12%]
