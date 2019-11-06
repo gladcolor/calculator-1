@@ -3,6 +3,10 @@
 # calculator
 
 # Test result
+
+Ran in docker:
+![](./img/docker_test.jpg)
+
 collecting ... collected 8 items
 
 test_Calculator.py::MyTestCase::test_add PASSED                          [ 12%]
