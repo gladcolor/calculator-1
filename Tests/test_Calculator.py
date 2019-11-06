@@ -18,6 +18,8 @@ class MyTestCase(unittest.TestCase):
         # print(test_data)
         for row in test_data:
             result = float(row['Result'])
+            len_deci = len(str(result).split(".")[1])
+            result = round(result, len_deci)
             self.assertEqual(self.calculator.subtract(row['Value 1'], row['Value 2']), result)
             self.assertEqual(self.calculator.result, result)
 
@@ -57,7 +59,31 @@ class MyTestCase(unittest.TestCase):
             len_deci = len(str(result).split(".")[1])
             result = round(result, len_deci)
             # print('len_deci: ', len_deci)
-            self.assertEqual(round(self.calculator.add(row['Value 1'], row['Value 2']), len_deci), result)
+            self.assertEqual(round(self.calculator.multiply(row['Value 1'], row['Value 2']), len_deci), result)
+            self.assertEqual(round(self.calculator.result, len_deci), result)
+
+    def test_square(self):
+        # print("Start test_subtraction...")
+        test_data = CsvReader(r"../Tests/Data/Unit Test Square.csv").data
+        # print(test_data)
+        for row in test_data:
+            result = float(row['Result'])
+            len_deci = len(str(result).split(".")[1])
+            result = round(result, len_deci)
+            # print('len_deci: ', len_deci)
+            self.assertEqual(round(self.calculator.square(row['Value 1']), len_deci), result)
+            self.assertEqual(round(self.calculator.result, len_deci), result)
+
+    def test_square_root(self):
+        # print("Start test_subtraction...")
+        test_data = CsvReader(r"../Tests/Data/Unit Test Square Root.csv").data
+        # print(test_data)
+        for row in test_data:
+            result = float(row['Result'])
+            len_deci = len(str(result).split(".")[1])
+            result = round(result, len_deci)
+            # print('len_deci: ', len_deci)
+            self.assertEqual(round(self.calculator.square_root(row['Value 1']), len_deci), result)
             self.assertEqual(round(self.calculator.result, len_deci), result)
 
 if __name__ == '__main__':
