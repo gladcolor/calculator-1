@@ -298,7 +298,17 @@ re = session.query(Item).filter(not_(Item.cost_price.between(10, 50))).all()
 for i in re:
     print(i.name)
 '''
-
+'''
 re = session.query(Item).filter(Item.name.like("%r")).all()
+for i in re:
+    print(i.name)
+'''
+'''
+re = session.query(Item).filter(Item.name.ilike("%r")).all()
+for i in re:
+    print(i.name)
+'''
+
+re = session.query(Item).filter(not_(Item.name.ilike("%r"))).all()
 for i in re:
     print(i.name)
