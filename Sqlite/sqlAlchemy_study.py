@@ -293,3 +293,8 @@ for i in re:
 re = session.query(Item).filter(Item.cost_price.between(10, 50)).all()
 for i in re:
     print(i.name)
+
+re = session.query(Item).filter(not_(Item.cost_price.between(10, 50))).all()
+for i in re:
+    print(i.name)
+
