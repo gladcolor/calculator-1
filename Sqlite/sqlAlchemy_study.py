@@ -212,9 +212,21 @@ for i in re:
 '''
 
 # Count()
+'''
 re = session.query(Customer).count() # get the total number of records in the customers table
 print(re)
 re = session.query(Item).count()  # get the total number of records in the items table
 print(re)
 re = session.query(Order).count()  # get the total number of records in the orders table
 print(re)
+'''
+
+# first()
+'''
+re = session.query(Customer).first() # get the total number of records in the customers table
+print(re)
+re = session.query(Item).first()  # get the total number of records in the items table
+print(re)
+re = session.query(Order).first()  # get the total number of records in the orders table
+print(re)
+'''
