@@ -345,9 +345,29 @@ re = session.query(Customer).join(Order).all()
 for i in re:
     print(i.first_name, i.last_name )
 '''
+'''
 re = session.query(
     Customer.first_name,
     Order.id,
 ).outerjoin(Order).all()
 for i in re:
     print(i.first_name, i.id )
+'''
+'''
+re = session.query(
+    Customer.first_name,
+    Order.id,
+).outerjoin(Order, full=True).all()
+for i in re:
+    print(i.first_name, i.id)
+# Error:   sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) RIGHT and FULL OUTER JOINs are not currently supported
+# [SQL: SELECT customers.first_name AS customers_first_name, orders.id AS orders_id 
+# FROM customers FULL OUTER JOIN orders ON customers.id = orders.customer_id]
+# (Background on this error at: http://sqlalche.me/e/e3q8)  
+'''
+
+re = session.query(func.count(Customer.id)).join(Order).filter(
+    Customer.first_name == 'Toby'
+).group_by(Customer.id).scalar()
+
+print(re)
