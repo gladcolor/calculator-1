@@ -435,11 +435,18 @@ s3 = s1.union(s2).all()
 for i in s3:
     print(i)
 '''
+
 # deleting
+'''
 re = session.query(Item).filter(Item.name == 'Monitor')
 for i in re:
     print(i.id, i.name)
     session.delete(i)
+session.commit()
+'''
 
-#
+# Updating Data
+i = session.query(Item).get(8)
+i.selling_price = 25.91
+session.add(i)
 session.commit()
