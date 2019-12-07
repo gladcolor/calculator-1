@@ -10,15 +10,16 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import create_engine
 from sqlalchemy.dialects import sqlite
 
+from sqlalchemy import Column, String, create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
 print(sqlalchemy.__version__)
 
-
-# metadata.create_all(engine)
-
+Base = declarative_base()
 
 
-
-engine = create_engine("sqlite:///huan.db", echo=True)
+engine = create_engine("sqlite:///huan.db")
 engine.connect()
 Session = sessionmaker(bind=engine)
 metadata = MetaData()
@@ -27,43 +28,50 @@ session = Session()
 print('engine:', engine)
 
 print('metadata: ', metadata)
-customers = Table('customers', metadata,
-                  Column('id', Integer(), primary_key=True),
-                  Column('first_name', String(100), nullable=False),
-                  Column('last_name', String(100), nullable=False),
-                  Column('username', String(50), nullable=False),
-                  Column('email', String(200), nullable=False),
-                  Column('address', String(200), nullable=False),
-                  Column('town', String(50), nullable=False),
-                  Column('created_on', DateTime(), default=datetime.now),
-                  Column('updated_on', DateTime(), default=datetime.now, onupdate=datetime.now)
-                  )
+from sqlalchemy import create_engine, MetaData, Table, Integer, String, \
+    Column, DateTime, ForeignKey, Numeric
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
+from sqlalchemy.orm import mapper
 
-items = Table('items', metadata,
-              Column('id', Integer(), primary_key=True),
-              Column('name', String(200), nullable=False),
-              Column('cost_price', Numeric(10, 2), nullable=False),
-              Column('selling_price', Numeric(10, 2), nullable=False),
-              Column('quantity', Integer(), nullable=False),
-              CheckConstraint('quantity > 0', name='quantity_check')
-              )
+Base = declarative_base()
 
-orders = Table('orders', metadata,
-               Column('id', Integer(), primary_key=True),
-               Column('customer_id', ForeignKey('customers.id')),
-               Column('date_placed', DateTime(), default=datetime.now),
-               Column('date_shipped', DateTime())
-               )
 
-order_lines = Table('order_lines', metadata,
-                    Column('id', Integer(), primary_key=True),
-                    Column('order_id', ForeignKey('orders.id')),
-                    Column('item_id', ForeignKey('items.id')),
-                    Column('quantity', Integer())
-                    )
+class Post(Base):
+    __tablename__ = 'posts'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(100), nullable=False)
+    slug = Column(String(100), nullable=False)
+    content = Column(String(50), nullable=False)
+    published = Column(String(200), nullable=False, unique=True)
+    created_on = Column(DateTime(), default=datetime.now)
+    updated_on = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
 
+
+from sqlalchemy import MetaData, Table, String, Column, Text, DateTime, Boolean
+from sqlalchemy.orm import mapper
+from datetime import datetime
+
+metadata = MetaData()
+metadata.drop_all(engine)
+post = Table('post', metadata,
+             Column('id', Integer(), primary_key=True),
+             Column('title', String(200), nullable=False),
+             Column('slug', String(200), nullable=False),
+             Column('content', Text(), nullable=False),
+             Column('published', Boolean(), default=False),
+             Column('created_on', DateTime(), default=datetime.now),
+             Column('updated_on', DateTime(), default=datetime.now, onupdate=datetime.now)
+)
+
+
+
+mapper(Post, post)
+conn = engine.connect()
 metadata.create_all(engine)
 
+
+# metadata.drop_all(engine)
 for t in metadata.tables:
     print(metadata.tables[t])
 
