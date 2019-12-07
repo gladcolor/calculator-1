@@ -373,7 +373,7 @@ re = session.query(func.count(Customer.id)).join(Order).filter(
 print(re)
 '''
 
-
+'''
 re = session.query(
     func.count("*").label('town_count'),
     Customer.town
@@ -381,3 +381,21 @@ re = session.query(
 
 for i in re:
     print(i.town, i.town_count)
+'''
+
+# Dealing with Duplicates
+re = session.query(Customer.town).filter(Customer.id < 10).all()
+for i in re:
+    print(i.town)
+print('----------------')
+re = session.query(Customer.town).filter(Customer.id < 10).distinct().all()
+for i in re:
+    print(i.town)
+print('----------------')
+re = session.query(
+    func.count(distinct(Customer.town)),
+    func.count(Customer.town)
+).all()
+for i in re:
+    print(i)
+print('----------------')
