@@ -384,6 +384,7 @@ for i in re:
 '''
 
 # Dealing with Duplicates
+'''
 re = session.query(Customer.town).filter(Customer.id < 10).all()
 for i in re:
     print(i.town)
@@ -399,3 +400,19 @@ re = session.query(
 for i in re:
     print(i)
 print('----------------')
+'''
+
+# Casting
+re = session.query(
+    cast(func.pi(), Integer),
+    cast(func.pi(), Numeric(10, 2)),
+    cast(datetime.strptime("2010-12-01", '%Y-%m-%d'), DateTime),
+    # cast("2010-12-01", Date),
+).all()
+
+print(re)
+
+# Error:
+# sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such function: pi
+# [SQL: SELECT CAST(pi() AS INTEGER) AS anon_1, CAST(pi() AS NUMERIC(10, 2)) AS anon_2, CAST(? AS DATETIME) AS anon_3]
+# [parameters: ('2010-12-01 00:00:00.000000',)]
