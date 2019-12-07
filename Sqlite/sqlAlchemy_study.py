@@ -95,7 +95,7 @@ class OrderLine(Base):
     item = relationship("Item")
     order = relationship("Order")
 
-
+'''
 c1 = Customer(first_name='Toby',
               last_name='Miller',
               username='tmiller',
@@ -200,3 +200,11 @@ print('-------')
 
 for ol in c1.orders[1].order_lines:
     print(ol.id, ol.item, ol.quantity)
+    
+'''
+
+
+# Query
+re = session.query(Customer).all()
+for i in re:
+    print(i.last_name)
