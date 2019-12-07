@@ -403,6 +403,7 @@ print('----------------')
 '''
 
 # Casting
+'''
 re = session.query(
     cast(func.pi(), Integer),
     cast(func.pi(), Numeric(10, 2)),
@@ -416,3 +417,19 @@ print(re)
 # sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such function: pi
 # [SQL: SELECT CAST(pi() AS INTEGER) AS anon_1, CAST(pi() AS NUMERIC(10, 2)) AS anon_2, CAST(? AS DATETIME) AS anon_3]
 # [parameters: ('2010-12-01 00:00:00.000000',)]
+'''
+
+# Unions
+s1 = session.query(Item.id, Item.name).filter(Item.name.like("Wa%"))
+
+for i in s1:
+    print(i)
+print('-------------')
+s2 = session.query(Item.id, Item.name).filter(Item.name.like("%e%"))
+for i in s2:
+    print(i)
+print('-------------')
+
+s3 = s1.union(s2).all()
+for i in s3:
+    print(i)
