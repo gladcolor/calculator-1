@@ -365,9 +365,19 @@ for i in re:
 # FROM customers FULL OUTER JOIN orders ON customers.id = orders.customer_id]
 # (Background on this error at: http://sqlalche.me/e/e3q8)  
 '''
-
+'''
 re = session.query(func.count(Customer.id)).join(Order).filter(
     Customer.first_name == 'Toby'
 ).group_by(Customer.id).scalar()
 
 print(re)
+'''
+
+
+re = session.query(
+    func.count("*").label('town_count'),
+    Customer.town
+).group_by(Customer.town).having(func.count("*") > 2).all()
+
+for i in re:
+    print(i.town, i.town_count)
