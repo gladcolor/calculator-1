@@ -9,19 +9,39 @@ from sqlalchemy.dialects import sqlite
 
 print(sqlalchemy.__version__)
 
-engine = create_engine("sqlite:///huan.db")
 
+# metadata.create_all(engine)
+
+
+
+
+engine = create_engine("sqlite:///huan.db", echo=True)
 engine.connect()
-
-print(engine)
-
-metadata = MetaData()
-
-
-metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
-
+metadata = MetaData()
+metadata.create_all(engine)
 session = Session()
+print('engine:', engine)
+
+print('metadata: ', metadata)
+# blog = Table('blog', metadata,
+#     Column('id', Integer(), primary_key=True),
+#     Column('post_title', String(200), nullable=False),
+#     Column('post_slug', String(200),  nullable=False),
+#     Column('content', Text(),  nullable=False),
+#     Column('published', Boolean(),  default=False),
+#     Column('created_on', DateTime(), default=datetime.now),
+#     Column('updated_on', DateTime(), default=datetime.now, onupdate=datetime.now)
+# )
+
+for t in metadata.tables:
+    print(metadata.tables[t])
+
+print('-------------')
+
+for t in metadata.sorted_tables:
+    print(t.name)  # print table name
+
 #
 # c1 = Customer(first_name='Toby',
 #               last_name='Miller',
