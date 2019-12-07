@@ -221,12 +221,11 @@ re = session.query(Order).count()  # get the total number of records in the orde
 print(re)
 '''
 
-# first()
-'''
-re = session.query(Customer).first() # get the total number of records in the customers table
+# get()
+
+re = session.query(Customer).get(1) # get the total number of records in the customers table
 print(re)
-re = session.query(Item).first()  # get the total number of records in the items table
+re = session.query(Item).get(1)  # get the total number of records in the items table
 print(re)
-re = session.query(Order).first()  # get the total number of records in the orders table
+re = session.query(Order).get(100)  # get the total number of records in the orders table
 print(re)
-'''
