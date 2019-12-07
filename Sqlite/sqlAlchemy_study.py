@@ -420,6 +420,7 @@ print(re)
 '''
 
 # Unions
+'''
 s1 = session.query(Item.id, Item.name).filter(Item.name.like("Wa%"))
 
 for i in s1:
@@ -433,3 +434,12 @@ print('-------------')
 s3 = s1.union(s2).all()
 for i in s3:
     print(i)
+'''
+# deleting
+re = session.query(Item).filter(Item.name == 'Monitor')
+for i in re:
+    print(i.id, i.name)
+    session.delete(i)
+
+#
+session.commit()
