@@ -4,7 +4,7 @@ from sqlalchemy import ARRAY
 from sqlalchemy import *
 from sqlalchemy import create_engine, MetaData, Table, Integer, String, \
     Column, DateTime, ForeignKey, Numeric, CheckConstraint
-
+from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import create_engine
@@ -454,7 +454,7 @@ session.commit()
 '''
 
 # Raw Queries
-
+'''
 re = session.query(Customer).filter(text("first_name = 'John'")).all()
 for i in re:
     print(i.id, i.last_name)
@@ -464,3 +464,32 @@ for i in re:
 re = session.query(Customer).filter(text("town like 'Nor%'")).order_by(text("first_name, id desc")).all()
 for i in re:
     print(i.id, i.last_name)
+'''
+
+
+def dispatch_order(order_id):
+    # check whether order_id is valid or not
+    order = session.query(Order).get(order_id)
+
+    if not order:
+        raise ValueError("Invalid order id: {}.".format(order_id))
+
+    if order.date_shipped:
+        print("Order already shipped.")
+        return
+
+    try:
+        for i in order.order_lines:
+            i.item.quantity = i.item.quantity - i.quantity
+
+        order.date_shipped = datetime.now()
+        session.commit()
+        print("Transaction completed.")
+
+    except IntegrityError as e:
+        print(e)
+        print("Rolling back ...")
+        session.rollback()
+        print("Transaction failed.")
+
+dispatch_order(1)
