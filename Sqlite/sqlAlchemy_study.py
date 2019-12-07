@@ -37,48 +37,18 @@ from sqlalchemy.orm import mapper
 Base = declarative_base()
 
 
-class Post(Base):
-    __tablename__ = 'posts'
-    id = Column(Integer, primary_key=True)
-    title = Column(String(100), nullable=False)
-    slug = Column(String(100), nullable=False)
-    content = Column(String(50), nullable=False)
-    published = Column(String(200), nullable=False, unique=True)
-    created_on = Column(DateTime(), default=datetime.now)
-    updated_on = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
-
-
-from sqlalchemy import MetaData, Table, String, Column, Text, DateTime, Boolean
-from sqlalchemy.orm import mapper
-from datetime import datetime
-
-metadata = MetaData()
-metadata.drop_all(engine)
-post = Table('post', metadata,
-             Column('id', Integer(), primary_key=True),
-             Column('title', String(200), nullable=False),
-             Column('slug', String(200), nullable=False),
-             Column('content', Text(), nullable=False),
-             Column('published', Boolean(), default=False),
-             Column('created_on', DateTime(), default=datetime.now),
-             Column('updated_on', DateTime(), default=datetime.now, onupdate=datetime.now)
-)
-
-
-
-mapper(Post, post)
 conn = engine.connect()
 metadata.create_all(engine)
 
+metadata = MetaData()
 
-# metadata.drop_all(engine)
-for t in metadata.tables:
-    print(metadata.tables[t])
+#
+# clear_mappers()
+# mapper(Post, post)
 
-print('-------------')
-
-for t in metadata.sorted_tables:
-    print(t.name)  # print table name
+#
+# for t in metadata.sorted_tables:
+#     print(t.name)  # print table name
 
 #
 # c1 = Customer(first_name='Toby',
