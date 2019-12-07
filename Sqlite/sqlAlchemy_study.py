@@ -308,7 +308,16 @@ re = session.query(Item).filter(Item.name.ilike("%r")).all()
 for i in re:
     print(i.name)
 '''
-
+'''
 re = session.query(Item).filter(not_(Item.name.ilike("%r"))).all()
 for i in re:
     print(i.name)
+'''
+
+re = session.query(Customer).limit(2).all()
+for i in re:
+    print(i.first_name, i.last_name)
+
+re = session.query(Customer).filter(Customer.address.ilike("%avenue")).limit(2).all()
+for i in re:
+    print(i.first_name, i.last_name)
