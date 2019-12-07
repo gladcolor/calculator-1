@@ -213,19 +213,26 @@ for i in re:
 
 # Count()
 '''
-re = session.query(Customer).count() # get the total number of records in the customers table
+re = session.query(Customer).count()  
 print(re)
-re = session.query(Item).count()  # get the total number of records in the items table
+re = session.query(Item).count()  
 print(re)
-re = session.query(Order).count()  # get the total number of records in the orders table
+re = session.query(Order).count()  
 print(re)
 '''
 
 # get()
+'''
+re = session.query(Customer).get(1) 
+print(re)
+re = session.query(Item).get(1)   
+print(re)
+re = session.query(Order).get(100)   
+print(re)
+'''
 
-re = session.query(Customer).get(1) # get the total number of records in the customers table
-print(re)
-re = session.query(Item).get(1)  # get the total number of records in the items table
-print(re)
-re = session.query(Order).get(100)  # get the total number of records in the orders table
-print(re)
+# filter()
+
+re = session.query(Customer).filter(Customer.first_name == 'John').all()
+for i in re:
+    print(i.first_name, i.last_name)
