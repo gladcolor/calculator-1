@@ -331,7 +331,7 @@ re = session.query(Customer).limit(2).offset(17).all()
 for i in re:
     print(i.first_name, i.last_name)
 '''
-
+'''
 re = session.query(Item).filter(Item.name.ilike("wa%")).all()
 for i in re:
     print(i.name)
@@ -339,3 +339,8 @@ print('----------    ')
 re = session.query(Item).filter(Item.name.ilike("wa%")).order_by(Item.cost_price).all()
 for i in re:
     print(i.name)
+'''
+re = session.query(Customer).join(Order).all()
+for i in re:
+    print(i.first_name, i.last_name )
+
