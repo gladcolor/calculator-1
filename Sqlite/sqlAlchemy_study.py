@@ -446,7 +446,21 @@ session.commit()
 '''
 
 # Updating Data
+'''
 i = session.query(Item).get(8)
 i.selling_price = 25.91
 session.add(i)
 session.commit()
+'''
+
+# Raw Queries
+
+re = session.query(Customer).filter(text("first_name = 'John'")).all()
+for i in re:
+    print(i.id, i.last_name)
+re = session.query(Customer).filter(text("town like 'Nor%'")).all()
+for i in re:
+    print(i.id, i.last_name)
+re = session.query(Customer).filter(text("town like 'Nor%'")).order_by(text("first_name, id desc")).all()
+for i in re:
+    print(i.id, i.last_name)
