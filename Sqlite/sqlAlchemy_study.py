@@ -269,11 +269,16 @@ re = session.query(Customer).filter(and_(
 for i in re:
     print(i.first_name, i.last_name)
 '''
-
+'''
 re = session.query(Customer).filter(Order.date_shipped == None).all()
 for i in re:
     print(i.first_name, i.last_name)
 
 re = session.query(Customer).filter(Order.date_shipped != None).all()
+for i in re:
+    print(i.first_name, i.last_name)
+'''
+
+re = session.query(Customer).filter(Customer.first_name.in_(['Toby', 'Sarah'])).all()
 for i in re:
     print(i.first_name, i.last_name)
