@@ -232,7 +232,39 @@ print(re)
 '''
 
 # filter()
-
+'''
 re = session.query(Customer).filter(Customer.first_name == 'John').all()
+for i in re:
+    print(i.first_name, i.last_name)
+'''
+'''
+re = session.query(Customer).filter(Customer.id <= 500, Customer.town == "Norfolk").all()
+for i in re:
+    print(i.first_name, i.last_name)
+'''
+'''
+re = session.query(Customer).filter(or_(
+    Customer.town == 'Peterbrugh',
+    Customer.town == 'Norfolk'
+)).all()
+for i in re:
+    print(i.first_name, i.last_name)
+'''
+'''
+re = session.query(Customer).filter(and_(
+    Customer.first_name == 'John',
+    Customer.town == 'Norfolk'
+)).all()
+for i in re:
+    print(i.first_name, i.last_name)
+'''
+
+re = session.query(Customer).filter(and_(
+    Customer.first_name == 'John',
+    not_(
+        Customer.town == 'Peterbrugh',
+    )
+)).all()
+
 for i in re:
     print(i.first_name, i.last_name)
