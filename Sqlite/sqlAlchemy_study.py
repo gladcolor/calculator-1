@@ -85,6 +85,7 @@ class Order(Base):
     line_items = relationship("OrderLine")#, secondary="order_lines")#, backref='orders')
     customer  = relationship("Customer")
     order_lines = relationship("OrderLine")
+    date_shipped = Column(DateTime())
 #
 class OrderLine(Base):
     __tablename__ = 'order_lines'
@@ -258,13 +259,17 @@ re = session.query(Customer).filter(and_(
 for i in re:
     print(i.first_name, i.last_name)
 '''
-
+'''
 re = session.query(Customer).filter(and_(
     Customer.first_name == 'John',
     not_(
         Customer.town == 'Peterbrugh',
     )
 )).all()
+for i in re:
+    print(i.first_name, i.last_name)
+'''
 
+re = session.query(Customer).filter(Order.date_shipped == None).all()
 for i in re:
     print(i.first_name, i.last_name)
